@@ -10,6 +10,7 @@ namespace :foreman do
       opts = {
         app: fetch(:application),
         log: File.join(shared_path, 'foremanlog'),
+        user: 'deploy'
       }.merge fetch(:foreman_options, {})
 
       opts.merge!(host.properties.fetch(:foreman_options) || {})
