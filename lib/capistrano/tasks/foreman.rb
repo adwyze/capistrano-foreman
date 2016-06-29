@@ -11,7 +11,7 @@ namespace :foreman do
         app: fetch(:application),
         log: File.join(shared_path, 'log'),
       }.merge fetch(:foreman_options, {})
-      
+
       opts.merge!(host.properties.fetch(:foreman_options) || {})
 
       execute(:mkdir, "-p", opts[:log])
@@ -71,7 +71,7 @@ namespace :load do
     set :foreman_template, 'upstart'
     set :foreman_export_path, '/etc/init/sites'
     set :foreman_roles, :all
-    set :foreman_app, -> { fetch(:application) }
+    set :foreman_app, -> { "sites/#{fetch(:application)}" }
 
     if !fetch(:rvm_map_bins).nil?
       set :rvm_map_bins, fetch(:rvm_map_bins).push('foreman')
