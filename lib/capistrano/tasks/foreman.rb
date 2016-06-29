@@ -9,7 +9,7 @@ namespace :foreman do
     on roles fetch(:foreman_roles) do
       opts = {
         app: fetch(:application),
-        log: File.join(shared_path, 'log'),
+        log: File.join(shared_path, 'foremanlog'),
       }.merge fetch(:foreman_options, {})
 
       opts.merge!(host.properties.fetch(:foreman_options) || {})
@@ -59,7 +59,11 @@ namespace :foreman do
     when 'chruby'
       execute(:sudo, 'chruby-exec', fetch(:chruby_ruby), '--', *args)
     else
-      sudo_type ? sudo(*args) : execute(:sudo, *args)
+      if args[1] == 'export'
+        sudo_type ? sudo(*args) : execute(*args)
+      else
+        sudo_type ? sudo(*args) : execute(:sudo, *args)
+      end
     end
   end
 end
