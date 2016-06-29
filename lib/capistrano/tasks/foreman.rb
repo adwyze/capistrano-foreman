@@ -59,7 +59,7 @@ namespace :foreman do
     when 'chruby'
       execute(:sudo, 'chruby-exec', fetch(:chruby_ruby), '--', *args)
     else
-      sudo_type ? sudo(*args) : execute(*args)
+      sudo_type ? sudo(*args) : execute(:sudo, *args)
     end
   end
 end
